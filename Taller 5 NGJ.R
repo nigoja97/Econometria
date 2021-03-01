@@ -33,6 +33,14 @@ u <- mod1$residuals
 #4. Generar los cuadrados de los residuales
 u2 <- u^2
 
+#5. Estimar la regresión auxiliar de los residuales al cuadrado sobre las variables independientes
+fit <- lm(u2 ~ var.independientes, data=base_de_datos) 
+R2 <- summary(fit)$r.squared
+k <- dim(var.independientes)[2]
+estadistico <- dim(base_de_datos)[1] * R2
+valorP <- pchisq(q=estadistico, df=k, lower.tail=FALSE)
+cbind(estadistico, valorP)
 
+#6. 
 
 
