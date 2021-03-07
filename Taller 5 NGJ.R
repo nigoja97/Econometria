@@ -93,3 +93,15 @@ valorPwL
 
 
 
+#9. Regresión auxiliar para variación de la prueba White interacciones
+
+fitwint <- lm(u2 ~ var.independientes+(var.independientes%*%(t(var.independientes))), data=base_de_datos) 
+R2wint <- summary(fitwint)$r.squared
+estadisticowint <- n * R2wint
+valorPwint <- pchisq(q=estadisticowint, df=k, lower.tail=FALSE)
+Whiteint <- cbind(estadisticowint, valorPwint)
+Whiteint
+
+
+
+
