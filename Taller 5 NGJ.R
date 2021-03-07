@@ -95,23 +95,27 @@ install.packages("sandwich")
 library(lmtest)
 library(sandwich)
 
+#Para estimar los errores estandar robustos hacemos uso de la siguiente formula.
 lmtest::coeftest(mod1, vcov. = sandwich::vcovHC(mod1, type = 'HC1'))
-coeftest(mod1, vcov = vcovHC(mod1, type="HC1"))
 
-A <- lm(var.independientes[,1]~var.independientes[,2]+var.independientes[,3]+var.independientes[,4])
-uA <- A$residuals
-SRCAu <- sum((uA)^2)
-eeB1robrgdp <- sqrt((sum((uA^2)*(u2)))/(SRCAu^2))
+#coeftest(mod1, vcov = vcovHC(mod1)) Esta linea de codigo y las siguientes son algunos ejemplos de las diferentes formas que encontramos para estimar los errores estandar robustos
+#coeftest(mod1, vcov = vcovHC(mod1, "HC1"))
+#coeftest(mod1, vcov = vcovHC(mod1, "HC2"))
+#coeftest(mod1, vcov = vcovHC(mod1, "HC3"))
 
-
+#Profe, no pudimos estimar los errores estandar robustos para los coeficientes como lo sugería el taller. Sin embargo, econtramos una solución en internet la cual se muestra anteriormente, el único inconveniente que hayamos fue la presencia de numeros negativos en los errores estandar.
 
 #9. Regresión auxiliar para variación de la prueba White interacciones
-
-fitwint <- lm(u2 ~ var.independientes+(var.independientes%*%(t(var.independientes))), data=base_de_datos) 
+#Se estimó un modelo de white con interacciones para determinar la presencia de heterocedasticidad en el modelo.fitwint <- lm(u2 ~ var.independientes+(var.independientes%*%(t(var.independientes))), data=base_de_datos) 
+#H0: Homocedasticidad
 R2wint <- summary(fitwint)$r.squared
 estadisticowint <- n * R2wint
 valorPwint <- pchisq(q=estadisticowint, df=k, lower.tail=FALSE)
 Whiteint <- cbind(estadisticowint, valorPwint)
 Whiteint
+
+#A partir del resultado obtenido de la prueba de White con interacciones (Mismo resultado que en la prueba de Breusch-Pagan), se puede concluir que:
+#No se Rechaza H0
+
 
 
