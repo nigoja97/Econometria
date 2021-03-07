@@ -90,6 +90,18 @@ valorPwL
 #Bajo estos resultados podemos concluir que, NO se rechaza H0, por lo tanto, la prueba de Breusch-Pagan y de White determina que el modelo es homocedastico y no hay problemas de heterocedasticidad.
 
 #8. Generar errores estándar robustos a heterocedasticidad para cada uno de los estimadores de los parámetros del modelo.
+install.packages("lmtest")
+install.packages("sandwich")
+library(lmtest)
+library(sandwich)
+
+lmtest::coeftest(mod1, vcov. = sandwich::vcovHC(mod1, type = 'HC1'))
+coeftest(mod1, vcov = vcovHC(mod1, type="HC1"))
+
+A <- lm(var.independientes[,1]~var.independientes[,2]+var.independientes[,3]+var.independientes[,4])
+uA <- A$residuals
+SRCAu <- sum((uA)^2)
+eeB1robrgdp <- sqrt((sum((uA^2)*(u2)))/(SRCAu^2))
 
 
 
@@ -101,7 +113,5 @@ estadisticowint <- n * R2wint
 valorPwint <- pchisq(q=estadisticowint, df=k, lower.tail=FALSE)
 Whiteint <- cbind(estadisticowint, valorPwint)
 Whiteint
-
-
 
 
