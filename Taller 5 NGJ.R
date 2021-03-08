@@ -5,9 +5,14 @@ rm(list = ls())
 
 #Base de datos y paquetes.
 install.packages("stargazer")
+install.packages("lmtest")
+install.packages("sandwich")
+install.packages("readxl")
 library(stargazer)
-
+library(lmtest)
+library(sandwich)
 library(readxl)
+
 base_de_datos <- read_excel("growth.xlsx") #Suba la base de datos de la cual desea conocer la regresión lineal, en este caso en particular la base de datos en cuestión se llama growth.xlsx.
 View(base_de_datos)
 
@@ -90,11 +95,6 @@ valorPwL
 #Bajo estos resultados podemos concluir que, NO se rechaza H0, por lo tanto, la prueba de Breusch-Pagan y de White determina que el modelo es homocedastico y no hay problemas de heterocedasticidad.
 
 #8. Generar errores estándar robustos a heterocedasticidad para cada uno de los estimadores de los parámetros del modelo.
-install.packages("lmtest")
-install.packages("sandwich")
-library(lmtest)
-library(sandwich)
-
 #Para estimar los errores estandar robustos hacemos uso de la siguiente formula.
 lmtest::coeftest(mod1, vcov. = sandwich::vcovHC(mod1, type = 'HC1'))
 
@@ -117,5 +117,6 @@ Whiteint
 
 #A partir del resultado obtenido de la prueba de White con interacciones (Mismo resultado que en la prueba de Breusch-Pagan), se puede concluir que:
 #No se Rechaza H0
+
 
 
