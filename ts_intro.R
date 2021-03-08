@@ -1,7 +1,7 @@
 # establecer márgenes
 # abajo, izquierda, arriba, derecha
 
-par(mar=c(1,1,1,1))
+par(mar=c(5,1,1,1))
 set.seed(20210308)
 
 num = 1:10
@@ -45,6 +45,7 @@ facsrw <- acf(rw, lag.max=50)
 # diff(x, lag=1, differences=1)
 
 m = sample(1:9,size=50,replace=T)
+m
 m11 = c(NA,diff(m,1,1))
 m12 = c(NA,NA,diff(m,1,2))
 
