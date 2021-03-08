@@ -1,4 +1,4 @@
-##**Taller 5 Nicolás González J & Sofía Galeano F**
+##**Taller 5 Nicolás González J & Sofía Galeano F**----
 
 #Limpiar 
 rm(list = ls())
@@ -16,7 +16,7 @@ library(readxl)
 base_de_datos <- read_excel("growth.xlsx") #Suba la base de datos de la cual desea conocer la regresión lineal, en este caso en particular la base de datos en cuestión se llama growth.xlsx.
 View(base_de_datos)
 
-#1. Estimar la regresión lineal de la variable dependiente sobre un grupo de k variables independientes.
+#1. Estimar la regresión lineal de la variable dependiente sobre un grupo de k variables independientes.----
 #Se supone, como regla general, que la primera columna de la base de datos es la variable dependiente y el resto son independientes.
 
 var.dependiente <- as.matrix(base_de_datos[1])
@@ -26,7 +26,7 @@ mod1 <- lm(var.dependiente~var.independientes, data = base_de_datos)
 mod1
 mod1res <- stargazer(mod1, type="text")
 
-#2. Generar los valores ajustados de la variable dependiente.
+#2. Generar los valores ajustados de la variable dependiente.----
 coeficientes <- as.matrix(mod1$coefficients)
 
 intercepto <- matrix(1, nrow = dim(base_de_datos)[1], ncol = 1)
@@ -35,13 +35,13 @@ observaciones
 
 valores.ajustados <- observaciones%*%coeficientes
 
-#3. Generar los residuales de la regresión.
+#3. Generar los residuales de la regresión.----
 u <- mod1$residuals
 
-#4. Generar los cuadrados de los residuales.
+#4. Generar los cuadrados de los residuales.----
 u2 <- u^2
 
-#5. Estimar la regresión auxiliar de los residuales al cuadrado sobre las variables independientes.
+#5. Estimar la regresión auxiliar de los residuales al cuadrado sobre las variables independientes.----
 #H0: Homocedasticidad.
 fitbp <- lm(u2 ~ var.independientes, data=base_de_datos) 
 R2bp <- summary(fitbp)$r.squared
@@ -53,7 +53,7 @@ Breusch_Pagan <- cbind(estadisticobp, valorPbp)
 Breusch_Pagan
 #No Rechaza H0.
 
-#6. Estimar la regresión auxiliar de los residuales al cuadrado sobre los valores ajustados de la variable dependiente y los cuadrados de los valores ajustados de la variable dependiente.
+#6. Estimar la regresión auxiliar de los residuales al cuadrado sobre los valores ajustados de la variable dependiente y los cuadrados de los valores ajustados de la variable dependiente.----
 #H0: Homocedasticidad.
 fitw <- lm(u2 ~ valores.ajustados+valores.ajustados^2, data=base_de_datos) 
 R2w <- summary(fitw)$r.squared
@@ -63,7 +63,7 @@ White <- cbind(estadisticow, valorPw)
 White
 #No Rechaza H0
 
-#7. Para cada una de las regresiones estimadas en 5 y 6 calcular los estadísticos F y L.
+#7. Para cada una de las regresiones estimadas en 5 y 6 calcular los estadísticos F y L.----
 #Aunque no es necesario, volvemos a estimar k, n, R2bp y R2w. 
 k <- dim(var.independientes)[2]
 n <- dim(base_de_datos)[1]
@@ -94,7 +94,7 @@ valorPbpL
 valorPwL
 #Bajo estos resultados podemos concluir que, NO se rechaza H0, por lo tanto, la prueba de Breusch-Pagan y de White determina que el modelo es homocedastico y no hay problemas de heterocedasticidad.
 
-#8. Generar errores estándar robustos a heterocedasticidad para cada uno de los estimadores de los parámetros del modelo.
+#8. Generar errores estándar robustos a heterocedasticidad para cada uno de los estimadores de los parámetros del modelo.----
 #Para estimar los errores estandar robustos hacemos uso de la siguiente formula.
 lmtest::coeftest(mod1, vcov. = sandwich::vcovHC(mod1, type = 'HC1'))
 
@@ -105,7 +105,7 @@ lmtest::coeftest(mod1, vcov. = sandwich::vcovHC(mod1, type = 'HC1'))
 
 #Profe, no pudimos estimar los errores estandar robustos para los coeficientes como lo sugería el taller. Sin embargo, econtramos una solución en internet la cual se muestra anteriormente, el único inconveniente que hayamos fue la presencia de numeros negativos en los errores estandar.
 
-#9. Regresión auxiliar para variación de la prueba White interacciones
+#9. Regresión auxiliar para variación de la prueba White interacciones.----
 #Se estimó un modelo de white con interacciones para determinar la presencia de heterocedasticidad en el modelo.fitwint <- lm(u2 ~ var.independientes+(var.independientes%*%(t(var.independientes))), data=base_de_datos) 
 #H0: Homocedasticidad
 fitwint <- lm(u2 ~ var.independientes+(var.independientes%*%(t(var.independientes))), data=base_de_datos)
