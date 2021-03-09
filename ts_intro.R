@@ -94,7 +94,7 @@ err = rnorm(200)
 yt = ts(start=1,end=200,frequency = 1)
 yt[1] = err[1]
 yt[2] = 2*yt[1]+err[2]
-for (t in 3:80) yt[t]=2*yt[t-1]-yt[t-2]+err[t] 
+for (t in 3:200) yt[t]=2*yt[t-1]-yt[t-2]+err[t] 
 plot(yt)
 plot(diff(yt,1,1))
 plot(diff(yt,1,2))
