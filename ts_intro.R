@@ -90,7 +90,7 @@ m1res = mod1$residuals
 Box.test(m1res, lag = 20,type = "Ljung-Box") 
 
 
-err = rnorm(200)
+err = rnorm(200, mean = 0, sd = 1)
 yt = ts(start=1,end=200,frequency = 1)
 yt[1] = err[1]
 yt[2] = 2*yt[1]+err[2]
