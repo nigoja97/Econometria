@@ -1,0 +1,145 @@
+---
+title: "Taller 3 Nicolás González J"
+author: "Nicolás González J & Sofía Galeano"
+date: "17/2/2021"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+A partir de una matriz de datos, en la que la primera columna contiene los valrores de la
+muestra de la variable dependiente y las demás columnas son los valores observados de
+las variables independientes debe generar:
+
+1.  Un vector que contenga los estimadores del modelo
+
+2.   Una matriz de varianzas y covarianzas
+
+3.   Un vector que contenga con los errores estándar de los estimadores (ee)
+
+4.   Un vector que contenga los valores del estadístico de prueba de significancia individual
+
+5.  Un vector que contenga los valores p de las pruebas de significancia individual
+
+6.  El valor del estadístico de prueba F para la significancia conjunta
+
+7.  El valor p de la prueba de significancia conjunta
+
+Desarrollo
+
+1.
+
+Se crea una variable nueva variable, x, definida como una matriz que contiene la base de datos "wage" donde la primera columna tiene valor de 1.[^1]
+
+[^1]: X es una matriz con n filas y (k+1) columnas. La primera columna contiene el valor 1 en todas las celdas. Las siguientes columnas contienen los datos de las k variables independientes. Cada fila es una observación. 
+
+```{r}
+library(readxl)
+wage <- read_excel("C:/Users/NIGOJ/Downloads/wage.xlsx")
+x <- as.matrix(wage)
+x[,1]=1
+```
+
+Se crea una variable nueva, y, definida como una matriz que contiene los datos de la primera columna de la base de datos.[^2]
+
+[^2]:Y es una matriz con n filas y 1 columna. Cada entrada es una observación de la variable dependiente.
+
+```{r}
+y <- as.matrix(wage [1])
+```
+
+Luego se pueden estimar los coeficientes beta.
+```{r}
+B <- (solve(t(x)%*%x))%*%(t(x)%*%y)
+B
+```
+2.
+
+Para identificar la matriz de varianzas y covarianzas definida como la multiplicacion de la varianza del termino del error (s2) por la matriz inversa de la multiplicacion de x transpuesta por x, se debe:
+
+Identificar la Suma Residual de Cuadrados (SRC) y dividirla entre la cantidad de observaciones (n) menos el numero de variables independientes (k) más 1:
+```{r}
+n <- dim(wage)[1]
+n
+
+k <- dim(wage) [2]-1
+k
+
+s2_y <- var(y)
+s2_y
+
+STC <- (n-1)*s2_y
+STC
+
+SRC <-  (t(y)%*%y)-(t(B)%*%(t(x)%*%y))
+SRC
+
+s2 <- (SRC/(n-(k+1)))
+s2
+
+v <- as.numeric(s2)*solve(t(x)%*%x)
+v
+```
+NOTA: Aunque s2 sea un número escalar R lo identifica como matriz ya que es el producto de operaciones entre varias matrices. Tambien definimos s2_y como la varianza de la muestra y STC como la suma total de cuadrados, es decir, las observaciones menos 1 (n-1) multiplicada la varianza de y.
+
+3. 
+
+Para obtener el vector que contenga con los errores estándar de los estimadores (ee) debemos extraer la raiz cuadrada de la diagonal principal de la matriz de varianzas y covarianzas, es decir, las varianzas del termino error.
+
+```{r}
+ee <- sqrt(diag(v))
+ee
+```
+
+4. 
+
+Los valores del estadístico de prueba de significancia individual (t_ep) son la division de los coeficientes beta entre el error estandar (ee).
+```{r}
+t_ep <- B/ee
+t_ep
+```
+5. 
+
+Con los estadisticos de prueba podemos generar un vector que contenga los valores p de las pruebas de significancia individual. Definimos el valor p como 2 multiplicado por la probabilidad de que el estadistico T sea mayor que el valor absoluto del estimado (t_ep).
+```{r}
+pt <- 2*pt(abs(t_ep), df = n-1, lower.tail = FALSE)
+pt
+```
+6.
+
+El valor del estadistico F nos permite confirmar la significancia estadistica del modelo en general. Este se define como la division de la division del r2 y los grados de libertad 1 (gl1) y (1-r2) entre los grados de libertad 2 (gl2). [^3]
+
+[^3]: gl1 es igual al numero de variables independientes (k) y gl2 es el numero de observaciones menos la cantidad de variables independientes menos 1 (n-(k+1))
+
+```{r}
+r2 <- 1-(SRC/STC)
+r2
+
+gl1 <- k
+gl1
+gl2 <- n-(k+1)
+gl2
+ftest <- (r2/gl1)/((1-r2)/gl2)
+ftest
+```
+NOTA: Definimos r2 como 1 menos la division de la suma residual de cuadrados (SRC) entre la suma total de cuadrados (STC)
+
+7. 
+
+Con el valor del estadistico F podemos determinar la significancia conjunta del modelo identificando la probabilidad de que el estadistico F sea mayor que el estimado.
+```{r}
+pf <- pf(ftest, df1 = gl1, df2 = gl2, lower.tail = FALSE)
+pf 
+```
+
+
+
+
+
+
