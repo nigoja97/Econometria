@@ -7,6 +7,7 @@
 # Diagnóstico del modelo
 # Pronóstico
 
+install.packages("TSA")
 
 ## Especificación del modelo
 
@@ -15,7 +16,8 @@ library(ggplot2)
 library(forecast)
 library(tseries)
 library(TSA)     
-# trm2020 <- read_excel("trm2020.xlsx")
+
+trm2020 <- read_excel("trm2020.xlsx")
 TRM <- trm2020
 View(TRM)
 
@@ -29,7 +31,7 @@ TRM <- TRM[,-1]
 
 TRM$Precio <- TRM$TRM
 TRM <- TRM[,-1]
-
+TRM$f <- as.Date(TRM$f)
 
 #### Grafico de la TRM 
 par(mar=c(3,2,1,1))
@@ -284,4 +286,21 @@ fitts <- auto.arima(TRMT)
 fitts
 par(mar=c(2,2,1,1))
 tsdisplay(residuals(fitts), lag.max=30, main='Model Residuals')
+
+arfijos <- c(1,2,8,15)
+mafijos <- c(1,3)
+arorden <- max(arfijos)
+maorden <- max(mafijos)
+
+fijos <- rep(0, arorden+maorden)
+fijos
+
+for (i in arfijos) {
+  fijos[i] <- NA
+}
+
+for (i in mafijos) {
+  fijos[i+arorden] <- NA
+}
+
 
