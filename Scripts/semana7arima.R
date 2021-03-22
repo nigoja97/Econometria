@@ -128,7 +128,7 @@ adf.test(diff(log(TRM$Precio)), alternative = "stationary")
 # El correlograma del PACF permite saber el nivel de autocorrelación 
 # con las observaciones pasadas.
 # por lo tanto el orden para el componente AR se obtendrá
-# con ayuda del correlograma ACF. 
+# con ayuda del correlograma PACF. 
 
 par(mfrow=c(2,1))
 par(mar=c(2,3,1,1))
