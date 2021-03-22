@@ -55,6 +55,8 @@ mod11 <- arima(e_can, order = c(4,2,3), fixed = fijos1)
 mod12 <- arima(e_can, order = c(4,2,3))
 mod13 <- arima(e_can, order = c(2,2,3))
 stargazer(mod11,mod12,mod13, type = "text")
+#El modelo que mejor se ajusta a la serie e_can es el modelo mod13 que tiene todas las variables significativas y el valor AIC mas negativo.
+
 
 #Segunda serie: e_ja----
 #Crea una serie de tiempo que tome valores a lo largo de la base de datos con la variable que desea analizar en este caso e_can
@@ -101,6 +103,7 @@ mod21 <- arima(e_ja, order = c(15,1,16))
 mod22 <- arima(e_ja, order = c(15,1,15), fixed = fijos2)
 mod23 <- arima(e_ja, order = c(1,1,1))
 stargazer(mod21,mod22,mod23, type = "text", no.space = TRUE)
+#El modelo que mejor se ajusta a la serie e_can es el modelo mod122 que tiene todas las variables significativas y el menor valor AIC.
 
 
 #Tercera serie: e_uk----
@@ -146,5 +149,6 @@ for (i in mafijos3) {
 mod31 <- arima(e_uk, order = c(16,1,16), fixed = fijos3)
 mod32 <- arima(e_uk, order = c(1,1,1))
 stargazer(mod31,mod32, type = "text", no.space = TRUE)
+#El modelo que mejor se ajusta a la serie e_can es el modelo mod31 que tiene todas las variables significativas y el valor AIC mas negativo.
 
 
