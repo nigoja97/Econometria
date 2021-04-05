@@ -1,3 +1,4 @@
+install.packages("rugarch")
 library("Ecdat") # for a guide for modern econometrics
 
 #####################################
