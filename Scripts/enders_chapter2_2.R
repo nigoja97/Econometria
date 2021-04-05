@@ -8,15 +8,15 @@ library("Ecdat") # for a guide for modern econometrics
 #####################################
 
 ### PAGE 72
-library("gdata")
+library(gdata)
 library(readxl)
-data = read_excel("C:/Users/arias/Documents/Jorge trabajo/UExternado/Economia/ux ECO econometria R/Enders 4 data/ch2_sim2.xlsx")
-data = ch2_sim2
+data <- read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch2_sim2.xlsx")
+data <- ch2_sim2
 par(mar=c(3,2,1,1))
 par(mfrow=c(1,1))
 plot(data$Y1,type="l")
-Y1 = data[,"Y1"]
-Y2=data[,"Y2"]
+Y1 <- data[,"Y1"]
+Y2 <- data[,"Y2"]
 par(mfcol = c(2,1), oma = c(0,0,1,0) + 0.2, mar = c(0,1,0,0) + 1, mgp = c(0, 0.2, 0))
 # par(mfcol = c(2,1), oma = c(2,0,1,0), mar = c(0,1,0,0) , mgp = c(0, 0.2, 0))
 acf1 = acf(Y1,las=1,lag.max=20,tck=.02,xlab="",ylab="",main="ACF")
@@ -28,7 +28,7 @@ pacf2 = pacf(Y2,las=1,lag.max=20,tck=.02,xlab="",ylab="",main="",las=1)
 acf2; pacf2
 
 # TABLE 2.2: MODEL 1
-library("rugarch")
+library(rugarch)
 spec.ar1 = arfimaspec(mean.model=list(armaOrder=c(1,0),include.mean=FALSE))
 fit.ar1 = arfimafit(spec=spec.ar1,data=as.numeric(unlist(data$Y1)))
 fit.ar1
