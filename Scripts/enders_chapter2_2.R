@@ -107,7 +107,7 @@ library(readxl)
 library(rugarch)
 library(zoo)
 ### PAGE 88
-data = read.xls("/Users/user/Google Drive/Website/Book/Enders/QUARTERLY.xls")
+data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
 data = ch1_quarterly
 data$DATE = as.yearqtr(data$DATE)
 data$spread = data$r5-data$Tbill
@@ -121,8 +121,8 @@ plot(data$DATE[-1],diff(data$spread),type="l",las=1,xaxs="i",yaxs="i",xlab="",yl
 abline(h=0)
 
 par(mfrow=c(2,1))
-acf2=acf(data$spread,lag=12,tck=.02,xlab="",ylab="",main="",las=1)
-pacf2=pacf(data$spread,lag=12,tck=.02,xlab="",ylab="",main="",las=1)
+acf2=acf(data$spread,lag=12,tck=.02,xlab="",ylab="",main="FACS", tck = 0.02, col="steelblue4", las=1)
+pacf2=pacf(data$spread,lag=12,tck=.02,xlab="",ylab="",main="FACP",tck = 0.02, col="steelblue4", las=1)
 acf2      ## Buscar más de dos desviaciones estandar raiz(1/T)
 pacf2
 
@@ -219,6 +219,7 @@ which(data$DATE=="2000 Q2")
 data$DATE[162]
 actual = data$spread[-c(1:162)]
 length(data$spread)
+length(actual)
 ### 1-STEP AHEAD ROLLING WINDOW FORECAST
 
 # OPCIONES para solver = "solnp","gosolnp","nlminb","L-BGFS-U"
