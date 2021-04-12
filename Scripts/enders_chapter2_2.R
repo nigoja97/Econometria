@@ -209,8 +209,7 @@ Box.test(res.ar7,lag=12,type="Ljung-Box")
 library(readxl)
 library(rugarch)
 library(zoo)
-data = read.xls("QUARTERLY.xls")
-data= ch1_quarterly
+data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
 data$DATE = as.yearqtr(data$DATE)
 data$spread = data$r5-data$Tbill
 length(data$spread)
@@ -226,12 +225,15 @@ length(actual)
 # intente solnp
 # si no converge gosolnp puede mejorar
 # además intente nlminb
+spec.arma27 = arfimaspec(mean.model=list(armaOrder=c(2,7),include.mean=TRUE),
+                         fixed.pars=list(ma2=0,ma3=0,ma4=0,ma5=0,ma6=0))
+spec.ar7 = arfimaspec(mean.model=list(armaOrder=c(7,0),include.mean=TRUE))
 
 fore.arma27 = fore.ar7 = NULL
 for (i in 1:50) {
    fit.ar7=arfimafit(spec=spec.ar7,data=data$spread[1:(162+i-1)],solver="nlminb")
    fore.ar7[i]=arfimaforecast(fit.ar7,n.ahead=1)@forecast$seriesFor
-   fit.arma27=arfimafit(spec=spec.arma27,data=data$spread[1:(162+i-1)],solver="gosolnp")
+   fit.arma27=arfimafit(spec=spec.arma27,data=data$spread[1:(162+i-1)],solver="nlminb")
    fore.arma27[i]=arfimaforecast(fit.arma27,n.ahead=1)@forecast$seriesFor
 }
 mean(fore.ar7)
@@ -274,8 +276,7 @@ x = fore.error.ar7+fore.error.arma27
 z = fore.error.ar7-fore.error.arma27
 corxz = cor(z,x)
 GN = corxz/( sqrt( (1-corxz^2)/(length(fore.error.ar7)-1)))
-2*pt(abs(GN),df=49,lower.tail = F)
-
+2*pt(abs(GN),df=49,lower.tail = F)#SI FUERA SIGNIFICATIVO Y CORXZ TIENE UN VALOR POSITIVO, EL MODELO 1 TIENE UN MSPE MAS GRANDE Y PREFERIMOS USAR EL MODELO 2. DE LO CONTRARIO AMBOS MODELOS SON IGUAL DE BUENOS Y NO PREFERIMOS NINGUNO
 
 ### DIEBOLD-MARIANO TEST
 library(forecast)
