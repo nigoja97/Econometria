@@ -5,8 +5,8 @@ library(readxl)
 library(rugarch)
 library(zoo)
 
-data = read.xls("/Users/user/Google Drive/Website/Book/Enders/QUARTERLY.xls")
-data = ch1_quarterly
+data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
+
 data$DATE = as.yearqtr(data$DATE)
 data$spread = data$r5-data$Tbill
 
@@ -41,7 +41,7 @@ SSR1 = sum(fit.arma27.pre@fit$residuals^2)
 SSR2 = sum(fit.arma27.post@fit$residuals^2)
 SSR  = sum(fit.arma27@fit$residuals^2)
 Fcambio = ((SSR-SSR1-SSR2)/gl1)/((SSR1+SSR2)/gl2)
-pf(Fcambio,df1=5,df2=212-2*5,lower.tail = F)
+pf(Fcambio,df1=gl1,df2=gl2,lower.tail = F)
 
 
 #  método 2 
@@ -60,8 +60,8 @@ fit.arma27.ex
 ### ENDOGENOUS BREAKS
 ### PAGE 104
 library(tseries)
-Breaks = read.xls("/Users/user/Google Drive/Website/Book/Enders/y_break.xls")
-Breaks <- ch2_y_break
+Breaks <-  read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/y_break.xlsx")
+
 br = Breaks[,-1]
 par(mfrow=c(1,1))
 
@@ -178,8 +178,8 @@ library(readxl)
 library(rugarch)
 library(zoo)
 
-data = read.xls("/Users/user/Google Drive/Website/Book/Enders/QUARTERLY.xls")
-data = ch1_quarterly
+data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
+
 data$DATE = as.yearqtr(data$DATE)
 data$spread = data$r5-data$Tbill
 
@@ -306,5 +306,3 @@ plot(c(NA,actual),type="l",xlab="",ylab="",main="",las=1,xaxs="i",tck=0.02,ylim=
 lines(c(sbc.fore),col="steelblue1",lwd=2,lty=2)
 
 
-
-### END
