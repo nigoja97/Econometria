@@ -7,7 +7,7 @@ library("Ecdat") # for a guide for modern econometrics
 #####################################
 #####################################
 
-### PAGE 72
+### PAGE 72----
 library(gdata)
 library(readxl)
 data <- read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch2_sim2.xlsx")
@@ -205,7 +205,7 @@ Box.test(res.ar7,lag=12,type="Ljung-Box")
 
 
 
-### PAGE 94
+### PAGE 94----
 library(readxl)
 library(rugarch)
 library(zoo)
@@ -255,7 +255,7 @@ mean(fore.error.arma27)
 var(fore.error.ar7)
 var(fore.error.arma27)
 
-### PAGE 95
+### PAGE 95----
 lm95 <- summary(lm(actual~fore.ar7))
 #resolver la prueba beta1=1
 betagorro <-  lm95$coefficients[2,1]
@@ -292,7 +292,10 @@ acf.d
 
 
 ### SEASONALITY
-### PAGE 98
+### PAGE 98----
+data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
+data$DATE = as.yearqtr(data$DATE)
+data$spread = data$r5-data$Tbill
 par(mfrow=c(2,1))
 par(mar=c(3,2,1,1))
 plot(data$DATE,data$M1NSA,type="l",las=1,xaxs="i",yaxs="i",xlab="",ylab="",main="",tck=0.02,col="steelblue4",ylim=c(0,2500))
@@ -300,6 +303,21 @@ plot(data$DATE,data$M1NSA,type="l",las=1,xaxs="i",yaxs="i",xlab="",ylab="",main=
 mg = 100*diff(log(data$M1NSA))
 plot(data$DATE[-1],mg,type="l",las=1,xaxs="i",yaxs="i",xlab="",ylab="",main="",tck=0.02,col="steelblue4",ylim=c(-4,8))
 abline(h=0)
+
+# código nuevo
+
+# mg  perdió una observación, la primera
+#     empieza desde el trimestre 2
+
+t = rep(c(2,3,4,1),length.out=length(mg))
+
+by(mg,t,summary)
+
+par(mfrow=c(2,1))
+par(mar=c(3,2,1,1))
+plot(t,mg)
+boxplot(mg~t)
+#-------------------------------------------------------------------------------
 
 ### PANEL A
 par(mfrow=c(2,1))
@@ -336,12 +354,33 @@ Box.test(res.arma14,lag=4,type="Ljung-Box")
 Box.test(res.arma14,lag=8,type="Ljung-Box")
 Box.test(res.arma14,lag=12,type="Ljung-Box")
 
+# código nuevo
+
+install.packages("astsa")
+library(astsa)
+
+# sarima(xdata, p, d, q, P = 0, D = 0, Q = 0, S = -1, 
+#       details = TRUE, xreg=NULL, Model=TRUE,
+#       fixed=NULL, tol = sqrt(.Machine$double.eps), 
+#       no.constant = FALSE)
+
+sarimafit1 <- sarima(smg, 1, 0, 0, P = 1, D = 0, Q = 0, S = 4)
+summary(sarimafit1)
+sarimafit1
+
+sarimafit2 <- sarima(smg, 0, 0, 1, P = 0, D = 0, Q = 1, S = 4)
+summary(sarimafit2)
+sarimafit2
+
+
+#-----------------------------------------------------
+
 
 
 
 ### PARAMETER INSTABILITY
-data = read.xls("/Users/user/Google Drive/Website/Book/Enders/QUARTERLY.xls")
-library("zoo")
+data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
+library(zoo)
 data$DATE = as.yearqtr(data$DATE)
 data$spread = data$r5-data$Tbill
 
