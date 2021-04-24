@@ -155,7 +155,7 @@ pacf(diff(log(data$TRM)))
 
 # La figura muestra las funciones de autocorrelación de la primera diferencia
 
-### Creación del modelo
+### Creación del modelo----
 
 
 fit2 = arima(data$TRM, order=c(2,1,1))
