@@ -8,11 +8,12 @@ library(tidyverse)
 library(tseries)
 library(forecast)
 library(ggplot2)
+library(TSA)
 
-data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/trm2020.xlsx")
+data <- read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/trm2020.xlsx")
 data$fecha <- ymd(data$fecha)
 
-#Grafico de la TRM----
+#GRÁFICO DE LA TRM----
 ggplot(data = data, mapping = aes(x = fecha)) + 
   geom_line(aes(y = TRM), color="darkblue")+
   scale_x_date(breaks = function(x) seq.Date(from = min(x),to = max(x),by = "24 months")) 
@@ -28,7 +29,7 @@ ggplot(data = data, mapping = aes(x = fecha)) +
   scale_x_date(breaks = function(x) seq.Date(from = min(x),to = max(x),by = "24 months"))
 
 
-#Estacinoariedad----
+#ESTACIONARIEDAD----
 #Promedio movil de 7 y 30 dias para determinar componentes estacionarios y cíclicos de la serie
 data$Trmma7 = ma(data$TRM, order=7)
 data$Trmma30 = ma(data$TRM, order=30)
@@ -48,7 +49,7 @@ adf.test(diff(log(data$TRM)), alternative = "stationary")
 #SE PUEDE CONLCUIR QUE LA SERIE ES INTEGRADA DE ORDEN 1 (d=1)
 
 
-#DETERMINACINO DE ORDEN ARMA(p,q)----
+#DETERMINACIÓN DE ÓRDEN ARMA(p,q)----
 #AUTOCORRELACION Y AUTOCORRELACION PARCIAL
 par(mfrow=c(2,1))
 par(mar=c(2,3,1,1))
