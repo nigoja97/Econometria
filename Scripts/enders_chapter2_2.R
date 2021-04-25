@@ -233,12 +233,8 @@ fore.arma27 = fore.ar7 = NULL
 for (i in 1:50) {
    fit.ar7=arfimafit(spec=spec.ar7,data=data$spread[1:(162+i-1)],solver="nlminb")
    fore.ar7[i]=arfimaforecast(fit.ar7,n.ahead=1)@forecast$seriesFor
-   fit.arma27=arfimafit(spec=spec.arma27,data=data$spread[1:(162+i-1)],solver="nlminb")
-   fore.arma27[i]=arfimaforecast(fit.arma27,n.ahead=1)@forecast$seriesFor
 }
-mean(fore.ar7)
 mean(fore.arma27)
-var(fore.ar7)
 var(fore.arma27)
 
 par(mfrow=c(1,1))
@@ -401,17 +397,17 @@ library(readxl)
 library(rugarch)
 library(zoo)
 
-data = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
+data1 = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly.xls")
 
-data$DATE = as.yearqtr(data$DATE)
-data$spread = data$r5-data$Tbill
+data1$DATE = as.yearqtr(data1$DATE)
+data1$spread = data1$r5-data1$Tbill
 
 par(mfrow=c(2,1))
 par(mar=c(3,2,1,1))
 
-plot(data$DATE,data$spread,type="l",las=1,xaxs="i",yaxs="i",xlab="",ylab="",main="The Interest Rate Spread",tck=0.02,col="steelblue4",ylim=c(-2,4))
+plot(data1$DATE,data1$spread,type="l",las=1,xaxs="i",yaxs="i",xlab="",ylab="",main="The Interest Rate Spread",tck=0.02,col="steelblue4",ylim=c(-2,4))
 abline(h=0)
-plot(data$DATE[-1],diff(data$spread),type="l",las=1,xaxs="i",yaxs="i",xlab="",ylab="",main="First-Difference of The Spread",tck=0.02,col="steelblue4",ylim=c(-3,3))
+plot(data1$DATE[-1],diff(data1$spread),type="l",las=1,xaxs="i",yaxs="i",xlab="",ylab="",main="First-Difference of The Spread",tck=0.02,col="steelblue4",ylim=c(-3,3))
 abline(h=0)
 
 tm <- which(data$DATE=="1981 Q4")
@@ -419,7 +415,7 @@ t <-  which(data$DATE=="2008 Q1")
 
 spec.arma27 = arfimaspec(mean.model=list(armaOrder=c(2,7),include.mean=TRUE),
                          fixed.pars=list(ma2=0,ma3=0,ma4=0,ma5=0,ma6=0))
-fit.arma27.pre = arfimafit(spec=spec.arma27,data=data$spread[1:tm])
+fit.arma27.pre = arfimafit(spec=spec.arma27,data=data$spread[1:tm], solver = "gosolnp")
 fit.arma27.pre
 fit.arma27.post = arfimafit(spec=spec.arma27,data=data$spread[(tm+1):t],solver="gosolnp")
 fit.arma27.post
