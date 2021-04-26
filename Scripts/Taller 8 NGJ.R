@@ -174,4 +174,9 @@ var(fore.error.arma128)
 mod4 <- summary(lm(fecha2021~fore.arma128))
 mod4
 
+#CONCLUSION: Para hallar el error entre las dos regresiones se realiza una resta entre las observaciones pronosticadas por el modelo y las  observaciones reales. 
+#Al calcular la media de esta operacion podemos observar que corresponde al valor de 0.000500114, este valor indica el promedio de todos los datos, en otras palabras, 
+#es una medida estándar de la distribución de los datos y al ser tan pequeña quiere decir que el error es demasiado pequeño y podemos concluir que el modelo se ajusta 
+#bastante bien a los datos actuales de la regresion, ademas tambien se puede calcular la varianza que corresponde al valor de 0.00000337063 lo que quiere decir que la 
+#dispercion de los datos es demasiado pequeña, lo que refuerza la conclusion anterior.
 
