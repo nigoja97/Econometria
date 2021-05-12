@@ -6,19 +6,19 @@
 pacman::p_load(readxl,gdata,stargazer,MTS,rugarch,forecast,vars,urca,aTSA)
 ### PAGE 260
 library(readxl)
-library("gdata")
+library(gdata)
 library(stargazer)
 library(MTS)
 library(rugarch)
 library(forecast)
-library("vars")
-library("urca")
-library("aTSA")
+library(vars)
+library(urca)
+library(aTSA)
 
 
 
-datos = read.xls("TERRORISM.xls")
-datos = Terrorism
+datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch5_Terrorism.xls")
+
 ### FIGURE 5.1
 # Totales trimestrasles de incidentes terroristas con al menos una víctima desde 1970Q1
 datos$date = seq(1970,by=0.25,length.out=nrow(datos))
@@ -84,7 +84,7 @@ auto.arima(datos$Domestic,xreg=datos$prol.pulse,ic="bic")
 
 ### PAGE 278
 
-datos = read.xls("ch5_italy.xls")
+datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch5_italy.xls")
 datos = ch5_italy
 datos$ENTRY = seq(1971,by=0.25,length.out=nrow(datos))
 
@@ -97,7 +97,7 @@ abline(h=0)
 acf1 = acf(datos$Attkit[ind1:ind2])
 acf1
 
-library("MTS")
+library(MTS)
 par(mar=c(2,1,1,1))
 ccor = ccm(datos[,-1],level=TRUE)
 
@@ -181,12 +181,12 @@ plot(datos$Slitaly,type="l")
 
 
 ### PAGE 310
-library("vars")
-datos = read.xls("/Users/user/Google Drive/Website/Book/Enders/TERRORISM.xls")
+library(vars)
+datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch5_Terrorism.xls")
 datos$ENTRY = seq(1970,by=0.25,length.out=nrow(datos))
 
-library("urca")
-library("aTSA")
+library(urca)
+library(aTSA)
 colnames(datos)
 
 
@@ -219,7 +219,7 @@ plot(irf(svar.terror),col=1,las=1,xaxs="i",xlab="",ylab="")
 
 
 ### PAGE 325
-datos = read.xls("/Users/user/Google Drive/Website/Book/Enders/Enders_Holt.xls")
+datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/Enders_Holt.xls")
 datos$ENTRY = seq(1974.25,by=0.25,length.out=nrow(datos))
 k = ncol(datos[,-1])
 
@@ -242,7 +242,7 @@ plot(irf(svar.enders,boot=FALSE),col=1,las=1,xaxs="i",xlab="",ylab="")
 
 
 ### PAGE 331
-datos = read.xls("/Users/user/Google Drive/Website/Book/Enders/Exrates.xls")
+datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/Exrates.xls")
 head(datos)
 
 datos$loge_ca = log(datos$e_uk)
@@ -282,7 +282,7 @@ plot(irf(BQ.PPP,boot=FALSE),col=1,las=1,xaxs="i",xlab="",ylab="")
 
 
 ### PAGE 340
-datos = read.xls("QUARTERLY.xls")
+datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch1_quarterly")
 dinfl = diff(log(datos$CPI))
 dlip = diff(log(datos$IndProd))
 Y = cbind(dlip,dinfl)
