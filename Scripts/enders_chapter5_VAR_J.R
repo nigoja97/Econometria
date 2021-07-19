@@ -6,17 +6,17 @@
 ##  pacman::p_load(readxl,gdata,stargazer,MTS,rugarch,forecast,vars,urca,aTSA)
 ##
 library(readxl)
-library("gdata")
+library(gdata)
 library(stargazer)
 library(MTS)
 library(rugarch)
 library(forecast)
-library("vars")
-library("urca")
-library("aTSA")
+library(vars)
+library(urca)
+library(aTSA)
 
 ### PAGE 310
-datos = read.xls("TERRORISM.xls")
+datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/ch5_Terrorism.xls")
 datos = Terrorism
 datos$ENTRY = seq(1970,by=0.25,length.out=nrow(datos))
 
@@ -56,6 +56,7 @@ plot(fevd.terror)
 windows(16,12)
 par(mfcol = c(2,2), oma = c(0,0,1,0) + 0.2, mar = c(0,1,0,0) + 1, mgp = c(0, 0.2, 0))
 plot(irf(var.terror),col=1,las=1,xaxs="i",xlab="",ylab="")
+
 
 
 
