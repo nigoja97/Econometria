@@ -1,13 +1,13 @@
 #############Taller 8##############----
 #PAQUETES
-library(readxl)
-library(rugarch)
-library(lubridate)
-library(tidyverse)
-library(tseries)
-library(forecast)
-library(ggplot2)
-library(TSA)
+paquetes <-  c("readxl","rugarch","lubridate","tidyverse","tseries","forecast","ggplot2","TSA")
+
+for (paquete in paquetes) {
+  if (!require(paquete, character.only = TRUE)) {
+    install.packages(paquete, dependencies = TRUE)
+    library(paquete)
+  }
+}
 
 data <- read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de datos/trm2020.xlsx")
 data$fecha <- ymd(data$fecha)

@@ -44,7 +44,7 @@ plot(w,type="l",xaxs="i",las=1,xlab="",ylab="",tck=.02)
 #--------------------------------------------------------------------
 
 
-datos = read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de Datos/Coint6.xls")
+datos <- read_excel("C:/Users/NIGOJ/Desktop/Nico/Cosas de la U/Econometria R/Econometria/Bases de Datos/Coint6.xls")
 
 
 par(mfcol = c(1,1), oma = c(0,0,1,0) + 0.2, mar = c(0,1,0,0) + 1, mgp = c(0, 0.2, 0))
